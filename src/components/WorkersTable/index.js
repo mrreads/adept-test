@@ -18,7 +18,6 @@ function WorkersTable() {
     </div>
 
     <div className="table">
-
       <p className="table__item"> 1 </p>
       <p className="table__item"> 2 </p>
       <p className="table__item"> 3 </p>

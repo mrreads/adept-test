@@ -1,6 +1,16 @@
+import React, { useEffect, useRef  } from 'react';
+import { useSelector } from 'react-redux'
+
 import './index.scss';
 
 function CompaniesTable() {
+
+  const companies = useSelector((state) => state.companies.list)
+
+  useEffect(() => {
+    console.log(companies);
+  });
+
   return (
     <div className='companies-table'>
 
@@ -18,20 +28,19 @@ function CompaniesTable() {
       </div>
 
       <div className="table">
-        <p className="table__item"> 1 </p>
-        <p className="table__item"> 2 </p>
-        <p className="table__item"> 3 </p>
-        <p className="table__item"> 4 </p>
 
-        <p className="table__item"> 1 </p>
-        <p className="table__item"> 2 </p>
-        <p className="table__item"> 3 </p>
-        <p className="table__item"> 4 </p>
+        {
+          companies.map(company => {
+            return (
+            <React.Fragment key={company.id}>
+                <p className="table__item" data-active="false" data-id={company.id}> ч </p>
+                <p className="table__item"> {company.name} </p>
+                <p className="table__item"> {company.workers} </p>
+                <p className="table__item"> {company.address} </p>
+            </React.Fragment>)
+          })
+        }
 
-        <p className="table__item"> 1 </p>
-        <p className="table__item"> 2 </p>
-        <p className="table__item"> 3 </p>
-        <p className="table__item"> 4 </p>
       </div>
 
     </div>
