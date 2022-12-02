@@ -8,8 +8,8 @@ function generateWorkers(count) {
       'id': nanoid(),
       'surname': `Фамилия ${i}`,
       'name': `Имя ${i}`,
-      'job ': `Должность ${i}`,
-      'company': Math.floor(Math.random() * (1000 - 1 + 1) + 1)
+      'job': `Должность ${i}`,
+      'company': Math.floor(Math.random() * (10 - 1 + 1) + 1)
     }
     initialState.list.push(temp);
   }
@@ -19,7 +19,7 @@ const initialState = {
   list: []
 }
 
-generateWorkers(6000);
+generateWorkers(20);
 
 export const workersSlice = createSlice({
   name: 'workers',

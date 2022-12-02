@@ -24,8 +24,8 @@ h1, h2, h3, h4, h6 {
 }
 
 .App {
-  display: flex;
-  flex-flow: row nowrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 
   padding: 25px;
   padding-top: 15px;
@@ -47,7 +47,7 @@ h1, h2, h3, h4, h6 {
 
   width: 100%;
   height: fit-content;
-  
+
   &__item {
       align-self: stretch;
 
@@ -99,4 +99,21 @@ h1, h2, h3, h4, h6 {
   .companies-checkbox__text, .workers-checkbox__text {
     margin-left: auto;
   }
+}
+
+.checkbox {
+  min-height: 20px;
+  min-width: 20px;
+  max-height: 20px;
+  max-width: 20px;
+
+  border-radius: 3px;
+  outline: 1px solid #BDBDBD;
+  background-color: #FFFF;
+  &.active {
+    background-color: #BDBDBD;
+  }
+  
+  cursor: pointer;
+  transition: .3s all;
 }

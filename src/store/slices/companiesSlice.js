@@ -5,9 +5,8 @@ function generateCompanies(count) {
   for (let i = count; i > 0; i--)
   {
     let temp = {
-      'id': nanoid(),
+      'id': i,
       'name': `Компания ${i}`,
-      'workers': parseInt(Math.random() * 100),
       'address': `Адрес компании ${i}`,
     }
     initialState.list.push(temp);
@@ -18,7 +17,7 @@ const initialState = {
   list: []
 }
 
-generateCompanies(1000);
+generateCompanies(10);
 
 export const companiesSlice = createSlice({
   name: 'companies',
@@ -28,7 +27,6 @@ export const companiesSlice = createSlice({
         let temp = {
           'id': nanoid(),
           'name': `Компания ${state.list.length + 1}`,
-          'workers': parseInt(Math.random() * 100),
           'address': `Адрес компании ${state.list.length + 1}`,
         }
         state.list.push(temp);
