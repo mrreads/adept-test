@@ -1,6 +1,10 @@
+import React from 'react';
+import { useSelector } from 'react-redux'
 import './index.scss';
 
 function WorkersTable() {
+  const workers = useSelector((state) => state.workers.list)
+
   return (
     <div className='workers-table'>
 
@@ -18,21 +22,17 @@ function WorkersTable() {
     </div>
 
     <div className="table">
-      <p className="table__item"> 1 </p>
-      <p className="table__item"> 2 </p>
-      <p className="table__item"> 3 </p>
-      <p className="table__item"> 4 </p>
-
-
-      <p className="table__item" data-active="true"> 1 </p>
-      <p className="table__item"> 2 </p>
-      <p className="table__item"> 3 </p>
-      <p className="table__item"> 4 </p>
-
-      <p className="table__item"> 1 </p>
-      <p className="table__item"> 2 </p>
-      <p className="table__item"> 3 </p>
-      <p className="table__item"> 4 </p>
+    {
+          workers.map(worker => {
+            return (
+            <React.Fragment key={worker.id}>
+                <p className="table__item" data-active="false" data-id={worker.id}> ч </p>
+                <p className="table__item"> {worker.name} </p>
+                <p className="table__item"> {worker.workers} </p>
+                <p className="table__item"> {worker.address} </p>
+            </React.Fragment>)
+          })
+        }
     </div>
 
   </div>

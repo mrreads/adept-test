@@ -1,15 +1,9 @@
-import React, { useEffect, useRef  } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux'
-
 import './index.scss';
 
 function CompaniesTable() {
-
   const companies = useSelector((state) => state.companies.list)
-
-  useEffect(() => {
-    console.log(companies);
-  });
 
   return (
     <div className='companies-table'>
@@ -34,9 +28,9 @@ function CompaniesTable() {
             return (
             <React.Fragment key={company.id}>
                 <p className="table__item" data-active="false" data-id={company.id}> ч </p>
+                <p className="table__item"> {company.surname} </p>
                 <p className="table__item"> {company.name} </p>
-                <p className="table__item"> {company.workers} </p>
-                <p className="table__item"> {company.address} </p>
+                <p className="table__item"> {company.job} </p>
             </React.Fragment>)
           })
         }
