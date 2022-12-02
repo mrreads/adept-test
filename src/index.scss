@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@500;700&family=Montserrat:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h1, h2, h3, h4, h6 {
+  font-family: 'Commissioner', sans-serif;
+}
+
+#root {
+  min-height: 100%;
+}
+
+.App {
+  display: flex;
+  flex-flow: row nowrap;
+
+  padding: 25px;
+  padding-top: 15px;
+  gap: 50px;
+
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.table {
+  display: grid;
+
+  outline: 1px solid #BDBDBD;
+  background-color: #BDBDBD;
+  gap: 1px;
+  border-radius: 10px;
+  
+  overflow: hidden;
+
+  width: 100%;
+
+  &__item {
+      align-self: stretch;
+
+      padding: 5px 15px;
+      background-color: #FFFFFF;
+
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      &[data-active=true], &[data-active=true] + p, &[data-active=true] + p + p, &[data-active=true] + p + p + p {
+          background-color: #EEEEEE;
+      }
+  }
+
+  &.title {
+      position: sticky;
+      top: 15px;
+      left: 15px;
+
+      margin-bottom: 5px;
+      & .table__item {
+          display: flex;
+          align-items: flex-end;
+  
+          font-family: 'Commissioner', sans-serif;
+          font-weight: bold;
+
+          padding: 10px;
+          
+      }
+  }
+}
+
+.companies-table, .workers-table {
+  .companies-header, .workers-header {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 15px;
+
+    margin-bottom: 15px;
+  }
+  .companies-header__title, .workers-header__title {
+    font-family: 'Commissioner', sans-serif;
+    font-weight: bold;
+    font-size: 28px;
+  }
+  .companies-checkbox__text, .workers-checkbox__text {
+    margin-left: auto;
+  }
+}
