@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { nanoid } from '@reduxjs/toolkit'
+import config from './../../config';
+let { companyCount } = config;
 
 function generateCompanies(count) {
   for (let i = count; i > 0; i--)
@@ -14,22 +16,24 @@ function generateCompanies(count) {
 }
 
 const initialState = {
+  inc: companyCount,
   list: []
 }
 
-generateCompanies(10);
+generateCompanies(companyCount);
 
 export const companiesSlice = createSlice({
   name: 'companies',
   initialState,
   reducers: {
     add: (state, action) => {
+        state.inc++;
         let temp = {
-          'id': nanoid(),
-          'name': `Компания ${state.list.length + 1}`,
-          'address': `Адрес компании ${state.list.length + 1}`,
+          'id': state.inc,
+          'name': `Компания ${state.inc}`,
+          'address': `Адрес компании ${state.inc}`,
         }
-        state.list.push(temp);
+        state.list.unshift(temp);
     },
     remove: (state, action) => {
         state.list = state.list.filter(company => company.id !== action.payload.id);

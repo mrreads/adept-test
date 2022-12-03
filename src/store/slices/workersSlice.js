@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { nanoid } from '@reduxjs/toolkit'
+import config from './../../config';
+let { workersCount, companyCount } = config;
+
 
 function generateWorkers(count) {
   for (let i = count; i > 0; i--)
@@ -9,31 +12,34 @@ function generateWorkers(count) {
       'surname': `Фамилия ${i}`,
       'name': `Имя ${i}`,
       'job': `Должность ${i}`,
-      'company': Math.floor(Math.random() * (10 - 1 + 1) + 1)
+      'company': Math.floor(Math.random() * (companyCount - 1 + 1) + 1)
     }
     initialState.list.push(temp);
   }
 }
 
 const initialState = {
+  inc: workersCount,
   list: []
 }
 
-generateWorkers(20);
+generateWorkers(workersCount);
 
 export const workersSlice = createSlice({
   name: 'workers',
   initialState,
   reducers: {
     add: (state, action) => {
+        state.inc++;
         let temp = {
           'id': nanoid(),
-          'surname': `Фамилия ${state.list.length + 1}`,
-          'name': `Имя ${state.list.length + 1}`,
-          'job': `Должность ${state.list.length + 1}`,
-          'company': Math.floor(Math.random() * (1000 - 1 + 1) + 1)
+          'surname': `Фамилия ${state.inc}`,
+          'name': `Имя ${state.inc}`,
+          'job': `Должность ${state.inc}`,
+          'company': Math.floor(Math.random() * (action.payload - 1 + 1) + 1)
         }
-        state.list.push(temp);
+        console.log(action.payload)
+        state.list.unshift(temp);
     },
     remove: (state, action) => {
         state.list = state.list.filter(worker => worker.id !== action.payload.id);

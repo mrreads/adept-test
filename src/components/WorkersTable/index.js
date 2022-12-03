@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { add } from '../../store/slices/workersSlice';
 
 import Checkbox from '../Checkbox';
 import './index.scss';
 
 function WorkersTable({ selectedCompanies }) {
-  const workers = useSelector((state) => state.workers.list)
+  const workers = useSelector((state) => state.workers.list);
+  const inc = useSelector((state) => state.companies.inc);
+  const dispatch = useDispatch();
+
   const [filteredWorkers, setFilteredWorkers] = useState([]); 
   useEffect(() => {
     setFilteredWorkers(workers.filter(w => selectedCompanies.indexOf(w.company) >= 0 ? w : null));
@@ -42,39 +46,43 @@ function WorkersTable({ selectedCompanies }) {
   return (
     <div className='workers-table'>
 
+     
+
+      <div className='workers-header'>
+        <p className='workers-header__title'>Сотрудники</p>
+
+        <p className='workers-checkbox__text'>Выделить всё</p>
+        <Checkbox customToggle customStatus={allWorkersSelected} callback={selectAllWorkers} />
+      </div>
+
+      <div className="table title">
+        <p className="table__item"> </p>
+        <p className="table__item"> Фамилия </p>
+        <p className="table__item"> Имя </p>
+        <p className="table__item"> Должность </p>
+      </div>
+
+      <div className='table-control'>
+        <button className="table__button" onClick={() => dispatch(add(inc))}> Добавить сотрудника </button>
+      </div>
+
       { (filteredWorkers.length <= 0) ? <h1 style={{ textAlign: 'right' }}> Выберите компанию </h1> : (
-
-      <>
-        <div className='workers-header'>
-          <p className='workers-header__title'>Сотрудники</p>
-
-          <p className='workers-checkbox__text'>Выделить всё</p>
-          <Checkbox customToggle customStatus={allWorkersSelected} callback={selectAllWorkers} />
-        </div>
-
-        <div className="table title">
-          <p className="table__item"> </p>
-          <p className="table__item"> Фамилия </p>
-          <p className="table__item"> Имя </p>
-          <p className="table__item"> Должность </p>
-        </div>
-
-        <div className="table">
-        {
-              filteredWorkers.map(worker => {
-                return (
-                <React.Fragment key={worker.id}>
-                    <div className="table__item" data-active={workerIsSelected(worker.id)} data-id={worker.id}> 
-                      <Checkbox customToggle customStatus={workerIsSelected(worker.id)} callback={(e, value) => handleWorker(value, e.target.parentElement.dataset.id) } /> 
-                    </div>
-                    <p className="table__item"> {worker.name} </p>
-                    <p className="table__item"> {worker.surname} </p>
-                    <p className="table__item"> {worker.job} </p>
-                </React.Fragment>)
-              })
-            }
-        </div> 
-      </> )}
+      <div className="table">
+      {
+            filteredWorkers.map(worker => {
+              return (
+              <React.Fragment key={worker.id}>
+                  <div className="table__item" data-active={workerIsSelected(worker.id)} data-id={worker.id} data-company={worker.company}> 
+                    <Checkbox customToggle customStatus={workerIsSelected(worker.id)} callback={(e, value) => handleWorker(value, e.target.parentElement.dataset.id) } /> 
+                  </div>
+                  <p className="table__item"> {worker.name} </p>
+                  <p className="table__item"> {worker.surname} </p>
+                  <p className="table__item"> {worker.job} </p>
+              </React.Fragment>)
+            })
+          }
+      </div> 
+      )}
 
     </div> 
   );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch  } from 'react-redux'
+import { add } from '../../store/slices/companiesSlice';
 
 import Checkbox from '../Checkbox';
 import './index.scss';
@@ -7,6 +8,7 @@ import './index.scss';
 function CompaniesTable({selectedCompanies, setSelectedCompanies}) {
   const companies = useSelector((state) => state.companies.list);
   const workers = useSelector((state) => state.workers.list);
+  const dispatch = useDispatch();
 
   const handleCompany = (bool, id) => {
     if (bool)
@@ -47,6 +49,11 @@ function CompaniesTable({selectedCompanies, setSelectedCompanies}) {
         <p className="table__item"> Кол-во сотрудников </p>
         <p className="table__item"> Адрес </p>
       </div>
+
+      <div className='table-control'>
+        <button className="table__button" onClick={() => dispatch(add())}> Добавить компанию </button>
+      </div>
+
 
       <div className="table">
 
