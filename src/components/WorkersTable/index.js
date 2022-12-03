@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { add } from '../../store/slices/workersSlice';
+import { add, remove } from '../../store/slices/workersSlice';
 
 import Checkbox from '../Checkbox';
 import './index.scss';
@@ -41,12 +41,16 @@ function WorkersTable({ selectedCompanies }) {
 
   useEffect(() => {
     setSelectedWorkers(filteredWorkers.filter(f => selectedWorkers.indexOf(f.id) >= 0).map(w => selectedCompanies.indexOf(w.company) >= 0 ? w.id : null));
-  }, [selectedCompanies]);
+  }, [selectedCompanies, filteredWorkers]);
+
+  const deleteWorkers = () => {
+    if (selectedWorkers.length > 0) {
+      filteredWorkers.filter(f => selectedWorkers.indexOf(f.id) >= 0).forEach(w => dispatch(remove(w)));
+    }
+  }
 
   return (
     <div className='workers-table'>
-
-     
 
       <div className='workers-header'>
         <p className='workers-header__title'>Сотрудники</p>
@@ -64,9 +68,10 @@ function WorkersTable({ selectedCompanies }) {
 
       <div className='table-control'>
         <button className="table__button" onClick={() => dispatch(add(inc))}> Добавить сотрудника </button>
+        <button className={`table__button ${selectedWorkers.length <= 0 ? 'disabled' : ''}`} onClick={deleteWorkers}> Удалить сотрудника(ов)</button>
       </div>
 
-      { (filteredWorkers.length <= 0) ? <h1 style={{ textAlign: 'right' }}> Выберите компанию </h1> : (
+      { (filteredWorkers.length <= 0) ? <h1 style={{ textAlign: 'center' }}> Выберите компанию </h1> : (
       <div className="table">
       {
             filteredWorkers.map(worker => {

@@ -84,6 +84,9 @@ h1, h2, h3, h4, h6 {
   &-control {
     margin-top: 15px;
     margin-bottom: 15px;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 15px;
   }
   &__button {
     font-size: 14px;
@@ -98,6 +101,15 @@ h1, h2, h3, h4, h6 {
     transition: .3s all;
     &:hover {
       background-color: #BDBDBD;
+    }
+
+    &.disabled {
+      user-select: none;
+      cursor: no-drop;
+      opacity: .5;
+      &:hover {
+        background-color: #EEEEEE;
+      }
     }
   }
 }
