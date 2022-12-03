@@ -7,6 +7,7 @@ import './index.scss';
 
 function WorkersTable({ selectedCompanies }) {
   const workers = useSelector((state) => state.workers.list);
+  const companies = useSelector((state) => state.companies.list);
   const inc = useSelector((state) => state.companies.inc);
   const dispatch = useDispatch();
 
@@ -67,7 +68,7 @@ function WorkersTable({ selectedCompanies }) {
       </div>
 
       <div className='table-control'>
-        <button className="table__button" onClick={() => dispatch(add(inc))}> Добавить сотрудника </button>
+        <button className="table__button" onClick={() => dispatch(add(companies.map(c => c.id)))}> Добавить сотрудника </button>
         <button className={`table__button ${selectedWorkers.length <= 0 ? 'disabled' : ''}`} onClick={deleteWorkers}> Удалить сотрудника(ов)</button>
       </div>
 

@@ -36,9 +36,8 @@ export const workersSlice = createSlice({
           'surname': `Фамилия ${state.inc}`,
           'name': `Имя ${state.inc}`,
           'job': `Должность ${state.inc}`,
-          'company': Math.floor(Math.random() * (action.payload - 1 + 1) + 1)
+          'company': action.payload[Math.floor(Math.random() * action.payload.length)]
         }
-        console.log(action.payload)
         state.list.unshift(temp);
     },
     remove: (state, action) => {

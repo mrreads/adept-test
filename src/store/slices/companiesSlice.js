@@ -1,5 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { nanoid } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 import config from './../../config';
 let { companyCount } = config;
 
