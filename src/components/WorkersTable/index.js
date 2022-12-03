@@ -8,7 +8,6 @@ import './index.scss';
 function WorkersTable({ selectedCompanies }) {
   const workers = useSelector((state) => state.workers.list);
   const companies = useSelector((state) => state.companies.list);
-  const inc = useSelector((state) => state.companies.inc);
   const dispatch = useDispatch();
 
   const [filteredWorkers, setFilteredWorkers] = useState([]); 

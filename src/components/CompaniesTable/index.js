@@ -43,7 +43,7 @@ function CompaniesTable({selectedCompanies, setSelectedCompanies}) {
   }
 
   const loadFunc =  () => {
-    dispatch(add(10))
+    dispatch(addMultiply(100))
   }
 
   return (
