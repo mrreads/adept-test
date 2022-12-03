@@ -71,7 +71,7 @@ function WorkersTable({ selectedCompanies }) {
         <button className={`table__button ${selectedWorkers.length <= 0 ? 'disabled' : ''}`} onClick={deleteWorkers}> Удалить сотрудника(ов)</button>
       </div>
 
-      { (filteredWorkers.length <= 0) ? <h1 style={{ textAlign: 'center' }}> Выберите компанию </h1> : (
+      { (filteredWorkers.length <= 0) ? <h1 style={{ textAlign: 'center', marginTop: '25px' }}> Выберите компанию </h1> : (
       <div className="table">
       {
             filteredWorkers.map(worker => {

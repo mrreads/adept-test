@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch  } from 'react-redux'
-import { add } from '../../store/slices/companiesSlice';
+import { add, remove } from '../../store/slices/companiesSlice';
 
 import Checkbox from '../Checkbox';
 import './index.scss';
@@ -33,6 +33,21 @@ function CompaniesTable({selectedCompanies, setSelectedCompanies}) {
     setAllCompaniesSelected(selectedCompanies.length === companies.length);
   }, [companies, selectedCompanies]);
 
+  const deleteCompanies = () => {
+    if (selectedCompanies.length > 0) {
+      let companiesToRemove = [];
+      companies.filter(f => selectedCompanies.indexOf(f.id) >= 0).forEach(c => { 
+        companiesToRemove.push(+c.id); 
+        dispatch(remove(c));
+      });
+      setSelectedCompanies(companies.filter(c => companiesToRemove.indexOf(c.id) < 0));
+    }
+  }
+
+  useEffect(() => {
+    console.log(selectedCompanies);
+  }, [selectedCompanies]);
+
   return (
     <div className='companies-table'>
 
@@ -52,6 +67,7 @@ function CompaniesTable({selectedCompanies, setSelectedCompanies}) {
 
       <div className='table-control'>
         <button className="table__button" onClick={() => dispatch(add())}> Добавить компанию </button>
+        <button className={`table__button ${selectedCompanies.length <= 0 ? 'disabled' : ''}`} onClick={deleteCompanies}> Удалить компанию/ии</button>
       </div>
 
 
