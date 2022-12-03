@@ -32,7 +32,7 @@ export const companiesSlice = createSlice({
           'name': `Компания ${state.inc}`,
           'address': `Адрес компании ${state.inc}`,
         }
-        state.list.push(temp);
+        state.list.unshift(temp);
     },
     addMultiply: (state, action) => {
 
@@ -50,9 +50,14 @@ export const companiesSlice = createSlice({
     remove: (state, action) => {
         state.list = state.list.filter(company => company.id !== action.payload.id);
     },
+    edit: (state, action) => {
+      let temp = [...state.list];
+      temp[temp.findIndex(c => +c.id === +action.payload.id)][action.payload.param] = action.payload.content;
+      state.list = temp;
+    }
   },
 })
 
-export const { add, remove, addMultiply } = companiesSlice.actions
+export const { add, remove, edit, addMultiply } = companiesSlice.actions
 
 export default companiesSlice.reducer

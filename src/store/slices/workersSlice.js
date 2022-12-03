@@ -45,9 +45,14 @@ export const workersSlice = createSlice({
     remove: (state, action) => {
         state.list = state.list.filter(worker => worker.id !== action.payload.id);
     },
+    edit: (state, action) => {
+      let temp = [...state.list];
+      temp[temp.findIndex(c => c.id === action.payload.id)][action.payload.param] = action.payload.content;
+      state.list = temp;
+    }
   },
 })
 
-export const { add, remove } = workersSlice.actions
+export const { add, remove, edit } = workersSlice.actions
 
 export default workersSlice.reducer

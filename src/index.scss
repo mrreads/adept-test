@@ -64,6 +64,11 @@ h1, h2, h3, h4, h6 {
       &[data-active=true], &[data-active=true] + p, &[data-active=true] + p + p, &[data-active=true] + p + p + p {
           background-color: #EEEEEE;
       }
+
+      &[contenteditable=true] {
+        background-color: beige !important;
+        text-overflow: unset;
+      }
   }
 
   &.title {

@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { add, remove } from '../../store/slices/workersSlice';
+import { add, remove, edit } from '../../store/slices/workersSlice';
+
+import useEditable from './../hooks/useEditable';
 
 import Checkbox from '../Checkbox';
 import './index.scss';
 
 function WorkersTable({ selectedCompanies }) {
+  const tableRef = useRef(null);
   const workers = useSelector((state) => state.workers.list);
   const companies = useSelector((state) => state.companies.list);
   const dispatch = useDispatch();
+
+  const editSave = (id, param, content) => {
+    dispatch(edit({ id, param, content }))
+  }
+  useEditable(tableRef, editSave);
 
   const [filteredWorkers, setFilteredWorkers] = useState([]); 
   useEffect(() => {
@@ -53,6 +61,7 @@ function WorkersTable({ selectedCompanies }) {
     if (companies.length > 0)
       dispatch(add(companies.map(c => c.id)));
   };
+
   return (
     <div className='workers-table'>
 
@@ -75,23 +84,25 @@ function WorkersTable({ selectedCompanies }) {
         <button className={`table__button ${selectedWorkers.length <= 0 ? 'disabled' : ''}`} onClick={deleteWorkers}> Удалить сотрудника</button>
       </div>
 
-      { (filteredWorkers.length <= 0) ? <h1 style={{ textAlign: 'center', marginTop: '25px' }}> Выберите компанию </h1> : (
-      <div className="table">
-      {
-            filteredWorkers.map(worker => {
-              return (
-              <React.Fragment key={worker.id}>
-                  <div className="table__item" data-active={workerIsSelected(worker.id)} data-id={worker.id} data-company={worker.company}> 
-                    <Checkbox customToggle customStatus={workerIsSelected(worker.id)} callback={(e, value) => handleWorker(value, e.target.parentElement.dataset.id) } /> 
-                  </div>
-                  <p className="table__item"> {worker.name} </p>
-                  <p className="table__item"> {worker.surname} </p>
-                  <p className="table__item"> {worker.job} </p>
-              </React.Fragment>)
-            })
-          }
-      </div> 
-      )}
+      <div ref={tableRef}>
+        { (filteredWorkers.length <= 0) ? <h1 style={{ textAlign: 'center', marginTop: '25px' }}> Выберите компанию </h1> : (
+        <div className="table">
+        {
+              filteredWorkers.map(worker => {
+                return (
+                <React.Fragment key={worker.id}>
+                    <div className="table__item" data-active={workerIsSelected(worker.id)} data-id={worker.id} data-company={worker.company}> 
+                      <Checkbox customToggle customStatus={workerIsSelected(worker.id)} callback={(e, value) => handleWorker(value, e.target.parentElement.dataset.id) } /> 
+                    </div>
+                    <p className="table__item" title={worker.name} data-id={worker.id} data-editable={true} data-type="name"> {worker.name} </p>
+                    <p className="table__item" title={worker.surname} data-id={worker.id} data-editable={true} data-type="surname"> {worker.surname} </p>
+                    <p className="table__item" title={worker.job} data-id={worker.id} data-editable={true} data-type="job"> {worker.job} </p>
+                </React.Fragment>)
+              })
+            }
+        </div> 
+        )}
+      </div>
 
     </div> 
   );
