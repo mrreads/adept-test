@@ -50,6 +50,10 @@ function WorkersTable({ selectedCompanies }) {
     }
   }
 
+  const addWorker = () => {
+    if (companies.length > 0)
+      dispatch(add(companies.map(c => c.id)));
+  };
   return (
     <div className='workers-table'>
 
@@ -68,8 +72,8 @@ function WorkersTable({ selectedCompanies }) {
       </div>
 
       <div className='table-control'>
-        <button className="table__button" onClick={() => dispatch(add(companies.map(c => c.id)))}> Добавить сотрудника </button>
-        <button className={`table__button ${selectedWorkers.length <= 0 ? 'disabled' : ''}`} onClick={deleteWorkers}> Удалить сотрудника(ов)</button>
+        <button className={`table__button ${companies.length <= 0 ? 'disabled' : ''}`} onClick={addWorker}> Добавить сотрудника </button>
+        <button className={`table__button ${selectedWorkers.length <= 0 ? 'disabled' : ''}`} onClick={deleteWorkers}> Удалить сотрудника</button>
       </div>
 
       { (filteredWorkers.length <= 0) ? <h1 style={{ textAlign: 'center', marginTop: '25px' }}> Выберите компанию </h1> : (

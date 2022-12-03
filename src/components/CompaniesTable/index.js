@@ -10,6 +10,11 @@ function CompaniesTable({selectedCompanies, setSelectedCompanies}) {
   const workers = useSelector((state) => state.workers.list);
   const dispatch = useDispatch();
 
+  const [allCompaniesSelected, setAllCompaniesSelected] = useState(false);
+  useEffect(() => {
+    setAllCompaniesSelected(selectedCompanies.length === companies.length);
+  }, [companies, selectedCompanies]);
+  
   const handleCompany = (bool, id) => {
     if (bool)
       setSelectedCompanies([...selectedCompanies, +id]);
@@ -28,25 +33,12 @@ function CompaniesTable({selectedCompanies, setSelectedCompanies}) {
       setSelectedCompanies(companies.map(c => c.id));
   }
 
-  const [allCompaniesSelected, setAllCompaniesSelected] = useState(false);
-  useEffect(() => {
-    setAllCompaniesSelected(selectedCompanies.length === companies.length);
-  }, [companies, selectedCompanies]);
-
   const deleteCompanies = () => {
     if (selectedCompanies.length > 0) {
-      let companiesToRemove = [];
-      companies.filter(f => selectedCompanies.indexOf(f.id) >= 0).forEach(c => { 
-        companiesToRemove.push(+c.id); 
-        dispatch(remove(c));
-      });
-      setSelectedCompanies(companies.filter(c => companiesToRemove.indexOf(c.id) < 0));
+      companies.filter(f => selectedCompanies.indexOf(f.id) >= 0).forEach(c => dispatch(remove(c)));
+      setSelectedCompanies([])
     }
   }
-
-  useEffect(() => {
-    console.log(selectedCompanies);
-  }, [selectedCompanies]);
 
   return (
     <div className='companies-table'>
@@ -67,10 +59,10 @@ function CompaniesTable({selectedCompanies, setSelectedCompanies}) {
 
       <div className='table-control'>
         <button className="table__button" onClick={() => dispatch(add())}> Добавить компанию </button>
-        <button className={`table__button ${selectedCompanies.length <= 0 ? 'disabled' : ''}`} onClick={deleteCompanies}> Удалить компанию/ии</button>
+        <button className={`table__button ${selectedCompanies.length <= 0 ? 'disabled' : ''}`} onClick={deleteCompanies}> Удалить компанию</button>
       </div>
 
-
+      { (companies.length <= 0) ? null : (
       <div className="table">
 
         {
@@ -87,7 +79,7 @@ function CompaniesTable({selectedCompanies, setSelectedCompanies}) {
           })
         }
 
-      </div>
+      </div> )}
 
     </div>
   );

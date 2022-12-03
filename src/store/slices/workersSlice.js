@@ -7,12 +7,13 @@ let { workersCount, companyCount } = config;
 function generateWorkers(count) {
   for (let i = count; i > 0; i--)
   {
+    let companyId = Math.floor(Math.random() * (companyCount - 1 + 1) + 1);
     let temp = {
       'id': nanoid(),
       'surname': `Фамилия ${i}`,
       'name': `Имя ${i}`,
-      'job': `Должность ${i}`,
-      'company': Math.floor(Math.random() * (companyCount - 1 + 1) + 1)
+      'job': `Компания ${companyId}`,
+      'company': companyId
     }
     initialState.list.push(temp);
   }
@@ -31,12 +32,13 @@ export const workersSlice = createSlice({
   reducers: {
     add: (state, action) => {
         state.inc++;
+        let companyId = action.payload[Math.floor(Math.random() * action.payload.length)];
         let temp = {
           'id': nanoid(),
           'surname': `Фамилия ${state.inc}`,
           'name': `Имя ${state.inc}`,
-          'job': `Должность ${state.inc}`,
-          'company': action.payload[Math.floor(Math.random() * action.payload.length)]
+          'job': `Компания ${companyId}`,
+          'company': companyId
         }
         state.list.unshift(temp);
     },
