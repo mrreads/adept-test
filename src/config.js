@@ -1,4 +1,4 @@
 export default {
-    companyCount: 10,
-    workersCount: 20
+    companyCount: 100,
+    workersCount: 200
 }

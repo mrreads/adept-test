@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch  } from 'react-redux'
-import { add, remove } from '../../store/slices/companiesSlice';
+import { add, remove, addMultiply } from '../../store/slices/companiesSlice';
+
+import InfiniteScroll from 'react-infinite-scroller';
 
 import Checkbox from '../Checkbox';
 import './index.scss';
@@ -40,6 +42,10 @@ function CompaniesTable({selectedCompanies, setSelectedCompanies}) {
     }
   }
 
+  const loadFunc =  () => {
+    dispatch(add(10))
+  }
+
   return (
     <div className='companies-table'>
 
@@ -63,23 +69,30 @@ function CompaniesTable({selectedCompanies, setSelectedCompanies}) {
       </div>
 
       { (companies.length <= 0) ? null : (
-      <div className="table">
+      <InfiniteScroll className='table'
+          pageStart={0}
+          loadMore={ loadFunc }
+          hasMore={ (companies.length > 20) ? true : false }
+          loader={<React.Fragment key={0}><div className="table__item" /> <div className="table__item">Загрузка</div> <div className="table__item">Загрузка</div> <div className="table__item">Загрузка</div></React.Fragment>}
+          >
+          {
+            companies.map(company => {
+              return (
+              <React.Fragment key={company.id}>
+                  <div className="table__item" data-active={companyIsSelected(company.id)} data-id={company.id}> 
+                    <Checkbox customToggle customStatus={companyIsSelected(company.id)} callback={(e, value) => handleCompany(value, company.id) } /> 
+                  </div>
+                  <p className="table__item"> {company.name} </p>
+                  <p className="table__item"> { workers.filter(w => w.company === company.id).length } </p>
+                  <p className="table__item"> {company.address} </p>
+              </React.Fragment>)
+            })
+          }
+      </InfiniteScroll>)}
 
-        {
-          companies.map(company => {
-            return (
-            <React.Fragment key={company.id}>
-                <div className="table__item" data-active={companyIsSelected(company.id)} data-id={company.id}> 
-                  <Checkbox customToggle customStatus={companyIsSelected(company.id)} callback={(e, value) => handleCompany(value, company.id) } /> 
-                </div>
-                <p className="table__item"> {company.name} </p>
-                <p className="table__item"> { workers.filter(w => w.company === company.id).length } </p>
-                <p className="table__item"> {company.address} </p>
-            </React.Fragment>)
-          })
-        }
+      
 
-      </div> )}
+
 
     </div>
   );

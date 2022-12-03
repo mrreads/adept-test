@@ -43,11 +43,14 @@ h1, h2, h3, h4, h6 {
   gap: 1px;
   border-radius: 10px;
   
-  overflow: hidden;
+  overflow: auto;
 
   width: 100%;
   height: fit-content;
 
+  &__loader {
+    background-color: #FFFFFF;
+  }
   &__item {
       align-self: stretch;
 

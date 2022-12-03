@@ -3,7 +3,7 @@ import config from './../../config';
 let { companyCount } = config;
 
 function generateCompanies(count) {
-  for (let i = count; i > 0; i--)
+  for (let i = 1; i <= count; i++)
   {
     let temp = {
       'id': i,
@@ -32,7 +32,20 @@ export const companiesSlice = createSlice({
           'name': `Компания ${state.inc}`,
           'address': `Адрес компании ${state.inc}`,
         }
-        state.list.unshift(temp);
+        state.list.push(temp);
+    },
+    addMultiply: (state, action) => {
+
+      for (let i = 1; i <= action.payload; i++)
+      {
+        state.inc++;
+        let temp = {
+          'id': state.inc,
+          'name': `Компания ${state.inc}`,
+          'address': `Адрес компании ${state.inc}`,
+        }
+        state.list.push(temp);
+      }
     },
     remove: (state, action) => {
         state.list = state.list.filter(company => company.id !== action.payload.id);
@@ -40,6 +53,6 @@ export const companiesSlice = createSlice({
   },
 })
 
-export const { add, remove } = companiesSlice.actions
+export const { add, remove, addMultiply } = companiesSlice.actions
 
 export default companiesSlice.reducer
