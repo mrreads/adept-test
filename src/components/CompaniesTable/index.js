@@ -94,7 +94,7 @@ function CompaniesTable({selectedCompanies, setSelectedCompanies}) {
                       <Checkbox customToggle customStatus={companyIsSelected(company.id)} callback={(e, value) => handleCompany(value, company.id) } /> 
                     </div>
                     <p className="table__item" title={company.name}  data-editable={true} data-id={company.id} data-type="name"> {company.name} </p>
-                    <p className="table__item"> { workers.filter(w => w.company === company.id).length } </p>
+                    <p className="table__item" style={{ textAlign: 'right' }}> { workers.filter(w => w.company === company.id).length } </p>
                     <p className="table__item" title={company.address}  data-editable={true} data-id={company.id} data-type="address"> {company.address} </p>
                 </React.Fragment>)
               })

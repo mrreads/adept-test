@@ -57,6 +57,7 @@ h1, h2, h3, h4, h6 {
       padding: 5px 15px;
       background-color: #FFFFFF;
 
+      display: inline-block;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -156,4 +157,24 @@ h1, h2, h3, h4, h6 {
   
   cursor: pointer;
   transition: .3s all;
+}
+
+@media screen and (max-width: 1600px) {
+  .table.title .table__item {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .companies-table {
+    .table {
+      grid-template-columns: 50px 150px 72px minmax(200px, 1fr);
+    }
+  }
+  .workers-table {
+    .table {
+        width: 100%;
+        grid-template-columns: 50px minmax(200px, 1fr) minmax(150px, 1fr) minmax(200px, 1fr);
+    }
+}
 }
